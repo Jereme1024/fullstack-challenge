@@ -4,7 +4,7 @@
  *
  */
 
-require('dotenv').config()
+require('dotenv').config({ path: '.env.' + process.env.NODE_ENV })
 
 import { ApolloServer, gql } from 'apollo-server'
 
@@ -13,16 +13,16 @@ const server = new ApolloServer({
   cors: {
     origin: [],
   },
-  dataSources: () => ({ }),
+  dataSources: () => ({}),
   debug: true,
   resolvers: {
     Query: {},
-    Mutation: {},
+    // Mutation: {},
   },
   typeDefs: gql`
     type Article {
-      title: string
-      content: string
+      title: String
+      content: String
     }
 
     type Query {
@@ -33,5 +33,5 @@ const server = new ApolloServer({
 
 // run server up
 server
-  .listen({ port: '' })
+  .listen({ port: process.env.SERVER_PORT || '5678' })
   .then(({ url }) => console.log(`Server is ready at ${url}`))
