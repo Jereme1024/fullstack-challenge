@@ -1,6 +1,6 @@
 type Query {
   article(id: String!): Article
-  articles(skip: Int, limit: Int): [Article]
+  articles(skip: Int, limit: Int): Articles
 }
 
 type Article {
@@ -8,6 +8,11 @@ type Article {
   author: String
   title: String
   content: String
+}
+
+type Articles {
+  data: [Article]
+  total: Int
 }
 
 type Mutation {
