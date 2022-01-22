@@ -17,3 +17,7 @@ coverage
 # Output
 build
 dist
+
+server/ipfs
+server/ipfs-test
+server/orbitdb

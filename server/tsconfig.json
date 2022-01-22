@@ -6,7 +6,7 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "target": "esnext",
-    "types": ["node", "jest"],
+    "types": ["jest", "node"],
     "baseUrl": "./src",
     "paths": {},
     "pretty": true,
