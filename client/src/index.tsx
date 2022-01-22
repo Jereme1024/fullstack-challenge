@@ -6,13 +6,6 @@
 
 import React from 'react'
 import { render } from 'react-dom'
-
-const App = (): React.ReactElement => {
-  return (
-    <section>
-      Hello, world! :)
-    </section>
-  )
-}
+import App from './App'
 
 render(<App />, document.getElementById('app'))
