@@ -3,21 +3,42 @@ import { Layout, Typography, List, Avatar } from 'antd'
 const { Header, Content } = Layout
 const { Title } = Typography
 import CollapsedButton from '../containers/CollapsedButton'
+import { useQuery } from 'react-apollo'
+import { gql } from 'apollo-boost'
 
-const listData: any = []
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    id: `id-${i}`,
-    author: 'author',
-    avatar: 'https://joeschmoe.io/api/v1/random',
-    href: '/articles',
-    title: `ant design part ${i}`,
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  })
+const ARTICLES = gql`
+  query {
+    articles {
+      id
+      author
+      title
+      content
+    }
+  }
+`
+interface Article {
+  id: string
+  author: string
+  title: string
+  content: string
+}
+
+interface ArticleItem extends Article {
+  href: string
+  avatar: string
 }
 
 export default function ArticlesPage() {
+  const { loading, error, data } = useQuery(ARTICLES)
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error :(</p>
+
+  const listData = data.articles.map((article: Article) => ({
+    ...article,
+    avatar: 'https://joeschmoe.io/api/v1/random',
+    href: `/articles/${article.id}`,
+  }))
+
   return (
     <Layout className="site-layout">
       <Header className="site-layout-background" style={{ padding: 0 }}>
@@ -32,10 +53,11 @@ export default function ArticlesPage() {
             onChange: (page) => {
               console.log(page)
             },
-            pageSize: 3,
+            defaultPageSize: 3,
+            pageSizeOptions: [3, 5, 8],
           }}
           dataSource={listData}
-          renderItem={(item: any) => (
+          renderItem={(item: ArticleItem) => (
             <List.Item key={item.id}>
               <List.Item.Meta
                 avatar={<Avatar src={item.avatar} />}

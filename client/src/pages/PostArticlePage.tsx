@@ -3,6 +3,8 @@ import { Layout, Typography, Form, Button, Input } from 'antd'
 const { Header, Content } = Layout
 const { Title } = Typography
 import CollapsedButton from '../containers/CollapsedButton'
+import defaultContent from './mock/content'
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -13,8 +15,6 @@ const formItemLayout = {
     },
   },
 }
-
-const defaultContent = `Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.`
 
 export default function PostArticlePage() {
   const onFinish = (values: any) => {

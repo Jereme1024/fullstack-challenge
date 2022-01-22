@@ -7,17 +7,23 @@ import { Layout } from 'antd'
 import { BrowserRouter } from 'react-router-dom'
 import NavSider from './routes/NavSider'
 import RouterView from './routes/RouteView'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
+
+const client = new ApolloClient({ uri: 'http://localhost:5678' })
 
 function App() {
   return (
     <>
       <Provider store={reduxStore}>
-        <BrowserRouter>
-          <Layout>
-            <NavSider />
-            <RouterView />
-          </Layout>
-        </BrowserRouter>
+        <ApolloProvider client={client}>
+          <BrowserRouter>
+            <Layout>
+              <NavSider />
+              <RouterView />
+            </Layout>
+          </BrowserRouter>
+        </ApolloProvider>
       </Provider>
     </>
   )
