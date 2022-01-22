@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout, Typography, List, Avatar } from 'antd'
 const { Header, Content } = Layout
 const { Title } = Typography
 import CollapsedButton from '../containers/CollapsedButton'
 import { useQuery } from 'react-apollo'
 import { gql } from 'apollo-boost'
+import { toast } from 'react-toastify'
 
 const ARTICLES = gql`
   query {
@@ -30,14 +31,31 @@ interface ArticleItem extends Article {
 
 export default function ArticlesPage() {
   const { loading, error, data } = useQuery(ARTICLES)
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error :(</p>
+  const [list, setList] = useState([])
 
-  const listData = data.articles.map((article: Article) => ({
-    ...article,
-    avatar: 'https://joeschmoe.io/api/v1/random',
-    href: `/articles/${article.id}`,
-  }))
+  useEffect(() => {
+    if (loading) {
+      toast.info(`Loading...`)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`Failed. ${error}`)
+    }
+  }, [error])
+
+  useEffect(() => {
+    console.log('articles', data)
+    if (data) {
+      const listData = data.articles.map((article: Article) => ({
+        ...article,
+        avatar: 'https://joeschmoe.io/api/v1/random',
+        href: `/articles/${article.id}`,
+      }))
+      setList(listData)
+    }
+  }, [data])
 
   return (
     <Layout className="site-layout">
@@ -53,10 +71,10 @@ export default function ArticlesPage() {
             onChange: (page) => {
               console.log(page)
             },
-            defaultPageSize: 3,
-            pageSizeOptions: [3, 5, 8],
+            defaultPageSize: 2,
+            pageSizeOptions: [2, 4, 8],
           }}
-          dataSource={listData}
+          dataSource={list}
           renderItem={(item: ArticleItem) => (
             <List.Item key={item.id}>
               <List.Item.Meta

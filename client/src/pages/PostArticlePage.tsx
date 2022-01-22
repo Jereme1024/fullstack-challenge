@@ -9,6 +9,8 @@ import { useMutation } from 'react-apollo'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
+const initialValues = { content: defaultContent }
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -46,11 +48,11 @@ export default function PostArticlePage() {
   useEffect(() => {
     if (data) {
       toast.success(`Successful.`)
+      console.log(data.createArticle.id)
     }
   }, [data])
 
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values)
     createArticle({ variables: values })
   }
 
@@ -61,7 +63,12 @@ export default function PostArticlePage() {
       </Header>
       <Content className="site-layout-background my-content">
         <Title level={3}>Post an article</Title>
-        <Form name="article" {...formItemLayout} onFinish={onFinish}>
+        <Form
+          name="article"
+          {...formItemLayout}
+          onFinish={onFinish}
+          initialValues={initialValues}
+        >
           <Form.Item
             name="title"
             label="Title"
@@ -84,12 +91,7 @@ export default function PostArticlePage() {
               },
             ]}
           >
-            <Input.TextArea
-              rows={10}
-              showCount
-              maxLength={512}
-              defaultValue={defaultContent}
-            />
+            <Input.TextArea rows={10} showCount maxLength={512} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
