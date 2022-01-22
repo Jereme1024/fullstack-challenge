@@ -8,12 +8,15 @@ import { gql } from 'apollo-boost'
 import { toast } from 'react-toastify'
 
 const ARTICLES = gql`
-  query {
-    articles {
-      id
-      author
-      title
-      content
+  query Articles($skip: Int, $limit: Int) {
+    articles(skip: $skip, limit: $limit) {
+      total
+      data {
+        id
+        author
+        title
+        content
+      }
     }
   }
 `
@@ -29,9 +32,21 @@ interface ArticleItem extends Article {
   avatar: string
 }
 
+const pageSize = 3
+
 export default function ArticlesPage() {
-  const { loading, error, data } = useQuery(ARTICLES)
+  const [skip, setSkip] = useState(0)
   const [list, setList] = useState([])
+  const [total, setTotal] = useState(0)
+  const [current, setCurrent] = useState(1)
+
+  const { loading, error, data, refetch } = useQuery(ARTICLES, {
+    variables: { skip, limit: pageSize },
+  })
+
+  useEffect(() => {
+    refetch()
+  }, [])
 
   useEffect(() => {
     if (loading) {
@@ -48,7 +63,9 @@ export default function ArticlesPage() {
   useEffect(() => {
     console.log('articles', data)
     if (data) {
-      const listData = data.articles.map((article: Article) => ({
+      const { articles } = data
+      setTotal(articles.total)
+      const listData = articles.data.map((article: Article) => ({
         ...article,
         avatar: 'https://joeschmoe.io/api/v1/random',
         href: `/articles/${article.id}`,
@@ -69,10 +86,13 @@ export default function ArticlesPage() {
           size="large"
           pagination={{
             onChange: (page) => {
-              console.log(page)
+              setSkip((page - 1) * pageSize)
+              setCurrent(page)
             },
-            defaultPageSize: 2,
-            pageSizeOptions: [2, 4, 8],
+            total,
+            current,
+            defaultCurrent: 1,
+            defaultPageSize: pageSize,
           }}
           dataSource={list}
           renderItem={(item: ArticleItem) => (

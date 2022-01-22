@@ -12,7 +12,8 @@ import { ApolloProvider } from 'react-apollo'
 import { ToastContainer, Slide } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const client = new ApolloClient({ uri: 'http://localhost:5678' })
+const serverUri = process.env.SERVER_URI || 'http://localhost:9000'
+const client = new ApolloClient({ uri: serverUri })
 
 function App() {
   return (
