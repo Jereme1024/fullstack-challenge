@@ -9,6 +9,8 @@ import NavSider from './routes/NavSider'
 import RouterView from './routes/RouteView'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
+import { ToastContainer, Slide } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const client = new ApolloClient({ uri: 'http://localhost:5678' })
 
@@ -25,6 +27,11 @@ function App() {
           </BrowserRouter>
         </ApolloProvider>
       </Provider>
+      <ToastContainer
+        position="top-center"
+        transition={Slide}
+        autoClose={1024}
+      />
     </>
   )
 }

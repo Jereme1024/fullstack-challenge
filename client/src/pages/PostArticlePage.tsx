@@ -4,6 +4,10 @@ const { Header, Content } = Layout
 const { Title } = Typography
 import CollapsedButton from '../containers/CollapsedButton'
 import defaultContent from './mock/content'
+import { gql } from 'apollo-boost'
+import { useMutation } from 'react-apollo'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 const formItemLayout = {
   labelCol: {
@@ -16,10 +20,40 @@ const formItemLayout = {
   },
 }
 
+const CREATE_ARTICLE = gql`
+  mutation CreateArticle($title: String!, $content: String!) {
+    createArticle(article: { title: $title, content: $content }) {
+      id
+    }
+  }
+`
+
 export default function PostArticlePage() {
+  const [createArticle, { data, loading, error }] = useMutation(CREATE_ARTICLE)
+
+  useEffect(() => {
+    if (loading) {
+      toast.info(`Loading...`)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`Failed. ${error}`)
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      toast.success(`Successful.`)
+    }
+  }, [data])
+
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values)
+    createArticle({ variables: values })
   }
+
   return (
     <Layout className="site-layout">
       <Header className="site-layout-background" style={{ padding: 0 }}>
