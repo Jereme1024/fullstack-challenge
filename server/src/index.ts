@@ -7,6 +7,8 @@
 require('dotenv').config({ path: '.env.' + process.env.NODE_ENV })
 
 import { ApolloServer, gql } from 'apollo-server'
+import Query from './resolvers/Query'
+import Mutation from './resolvers/Mutation'
 
 // init server
 const server = new ApolloServer({
@@ -14,21 +16,16 @@ const server = new ApolloServer({
     origin: [],
   },
   dataSources: () => ({}),
+  context: ({ req }: any) => {
+    const user = 'Tester'
+    return { user, req }
+  },
   debug: true,
   resolvers: {
-    Query: {},
-    // Mutation: {},
+    Query,
+    Mutation,
   },
-  typeDefs: gql`
-    type Article {
-      title: String
-      content: String
-    }
-
-    type Query {
-      articles: [Article]
-    }
-  `,
+  typeDefs: require('fs').readFileSync('src/schema.graphql').toString('utf-8'),
 })
 
 // run server up
