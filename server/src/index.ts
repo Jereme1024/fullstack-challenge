@@ -13,9 +13,7 @@ import { connectOrbitDb, disconnectOrbitDb } from './utils/orbitDb'
 
 // init server
 const server = new ApolloServer({
-  cors: {
-    origin: [],
-  },
+  cors: { origin: '*' },
   dataSources: () => ({}),
   context: ({ req }: any) => {
     const user = 'Tester'
