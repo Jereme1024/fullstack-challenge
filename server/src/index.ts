@@ -9,6 +9,7 @@ require('dotenv').config({ path: '.env.' + process.env.NODE_ENV })
 import { ApolloServer, gql } from 'apollo-server'
 import Query from './resolvers/Query'
 import Mutation from './resolvers/Mutation'
+import { connectOrbitDb, disconnectOrbitDb } from './utils/orbitDb'
 
 // init server
 const server = new ApolloServer({
@@ -28,7 +29,13 @@ const server = new ApolloServer({
   typeDefs: require('fs').readFileSync('src/schema.graphql').toString('utf-8'),
 })
 
-// run server up
-server
-  .listen({ port: process.env.SERVER_PORT || '5678' })
-  .then(({ url }) => console.log(`Server is ready at ${url}`))
+async function main() {
+  await connectOrbitDb()
+  await server
+    .listen({ port: process.env.SERVER_PORT || '5678' })
+    .then(({ url }) => console.log(`Server is ready at ${url}`))
+}
+
+main()
+
+process.on('SIGINT', disconnectOrbitDb)

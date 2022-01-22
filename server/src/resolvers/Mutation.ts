@@ -1,5 +1,6 @@
 import Article from './Article'
-import articles from './mock/articles'
+import { v4 as uuidV4 } from 'uuid'
+import { db } from '../utils/orbitDb'
 
 interface ArticleCreate {
   title: String
@@ -13,12 +14,12 @@ const Mutation = {
     { user }: any
   ) => {
     const article: Article = {
-      id: 'Unset',
+      id: uuidV4(),
       author: user,
       title,
       content,
     }
-    articles.push(article)
+    await db.put(article)
     return article
   },
 }
