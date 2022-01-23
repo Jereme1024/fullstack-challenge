@@ -11,12 +11,23 @@ import Query from './resolvers/Query'
 import Mutation from './resolvers/Mutation'
 import { connectOrbitDb, disconnectOrbitDb } from './utils/orbitDb'
 
+const isAnonymous = (name: string) => {
+  return name?.indexOf('Anonymous') === 0
+}
+
 // init server
 const server = new ApolloServer({
   cors: { origin: '*' },
   dataSources: () => ({}),
   context: ({ req }: any) => {
-    const user = 'Tester'
+    let user = 'Anonymous -1'
+    const token = req.headers.authorization || ''
+    const anonymous = req.headers.anonymous || ''
+    // if: token
+    // else if: anonymous
+    if (isAnonymous(anonymous)) {
+      user = anonymous
+    }
     return { user, req }
   },
   debug: true,

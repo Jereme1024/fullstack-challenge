@@ -5,12 +5,16 @@ export const slice = createSlice({
   name: 'app',
   initialState: {
     collapsed: false,
-    user,
+    userName: user.anonymous,
     token,
   },
   reducers: {
     toggleCollapsed: (state: any) => {
       state.collapsed = !state.collapsed
+    },
+    logout: (state: any) => {
+      state.token = ''
+      state.userName = user.anonymous
     },
   },
 })

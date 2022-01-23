@@ -6,7 +6,7 @@ const { Text } = Typography
 import { UserOutlined, GitlabOutlined, LogoutOutlined } from '@ant-design/icons'
 
 export default function UserPanel() {
-  const user = useSelector((state: any) => state.app.user)
+  const userName = useSelector((state: any) => state.app.userName)
   const token = useSelector((state: any) => state.app.token)
 
   function handleMenuClick(e: any) {
@@ -46,7 +46,7 @@ export default function UserPanel() {
         placement="bottomCenter"
         icon={<UserOutlined />}
       >
-        <Text strong={true}>{user}</Text>
+        <Text strong={true}>{userName}</Text>
       </Dropdown.Button>
     </Space>
   )
