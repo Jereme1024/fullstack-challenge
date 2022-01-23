@@ -1,15 +1,13 @@
 import React from 'react'
 import { Layout, Typography } from 'antd'
-const { Header, Content } = Layout
+const { Content } = Layout
 const { Title } = Typography
-import CollapsedButton from '../containers/CollapsedButton'
+import PageHeader from '../containers/PageHeader'
 
 export default function LoadingPage() {
   return (
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }}>
-        <CollapsedButton />
-      </Header>
+      <PageHeader />
       <Content className="site-layout-background my-content">
         <Title level={5}>Loading...</Title>
       </Content>

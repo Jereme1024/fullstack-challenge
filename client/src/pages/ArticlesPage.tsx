@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Layout, Typography, List, Avatar } from 'antd'
-const { Header, Content } = Layout
+const { Content } = Layout
 const { Title } = Typography
-import CollapsedButton from '../containers/CollapsedButton'
 import { useQuery } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import { toast } from 'react-toastify'
+import PageHeader from '../containers/PageHeader'
 
 const ARTICLES = gql`
   query Articles($skip: Int, $limit: Int) {
@@ -76,9 +76,7 @@ export default function ArticlesPage() {
 
   return (
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }}>
-        <CollapsedButton />
-      </Header>
+      <PageHeader />
       <Content className="site-layout-background my-content">
         <Title level={3}>Article List</Title>
         <List

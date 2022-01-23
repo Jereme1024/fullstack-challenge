@@ -1,13 +1,13 @@
 import React from 'react'
 import { Layout, Typography, Form, Button, Input } from 'antd'
-const { Header, Content } = Layout
+const { Content } = Layout
 const { Title } = Typography
-import CollapsedButton from '../containers/CollapsedButton'
 import defaultContent from './mock/content'
 import { gql } from 'apollo-boost'
 import { useMutation } from 'react-apollo'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
+import PageHeader from '../containers/PageHeader'
 
 const initialValues = { content: defaultContent }
 
@@ -58,9 +58,7 @@ export default function PostArticlePage() {
 
   return (
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }}>
-        <CollapsedButton />
-      </Header>
+      <PageHeader />
       <Content className="site-layout-background my-content">
         <Title level={3}>Post an article</Title>
         <Form

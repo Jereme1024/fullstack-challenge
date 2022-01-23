@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Layout, Typography } from 'antd'
-const { Header, Content } = Layout
+const { Content } = Layout
 const { Text } = Typography
-import CollapsedButton from '../containers/CollapsedButton'
 import { useQuery } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import { toast } from 'react-toastify'
@@ -10,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import Breadcrumbs, { BreadCrumb } from '../components/Breadcrumbs/Breadcrumbs'
 import styled from 'styled-components'
 import Meta from 'antd/lib/card/Meta'
+import PageHeader from '../containers/PageHeader'
 
 const CssWrapper = styled.div`
   .lastBreadCrumb {
@@ -82,14 +82,12 @@ export default function ArticlePage() {
 
   return (
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }}>
-        <CollapsedButton />
-      </Header>
+      <PageHeader />
       <Content className="site-layout-background my-content">
         <CssWrapper>
           <Breadcrumbs breadcrumbs={breadcrumbs} />
-          <Card hoverable>
-            <Meta title={article.title} description={article.author} />
+          <Card hoverable title={article.title}>
+            <Meta description={article.author} />
             <Text>{article.content}</Text>
           </Card>
         </CssWrapper>
