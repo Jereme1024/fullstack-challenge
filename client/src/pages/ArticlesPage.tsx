@@ -99,7 +99,7 @@ export default function ArticlesPage() {
             <List.Item key={item.id}>
               <List.Item.Meta
                 avatar={<Avatar src={item.avatar} />}
-                title={<a href={item.href}>{item.title}</a>}
+                title={<a href={item.href}>{item.title} 🔗</a>}
                 description={item.author}
               />
               {item.content}

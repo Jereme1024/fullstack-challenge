@@ -30,7 +30,7 @@ const server = new ApolloServer({
 async function main() {
   await connectOrbitDb()
   await server
-    .listen({ port: process.env.SERVER_PORT || '5678' })
+    .listen({ port: process.env.SERVER_PORT || '9000' })
     .then(({ url }) => console.log(`Server is ready at ${url}`))
 }
 

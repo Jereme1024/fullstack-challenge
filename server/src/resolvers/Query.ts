@@ -26,5 +26,17 @@ const Query = {
 
     return result
   },
+  article: async (_: any, { id }: any, context: any) => {
+    const articles = db.get(id)
+    if (articles.length === 0) {
+      return {
+        id,
+        author: 'NotFound',
+        title: 'NotFound',
+        content: 'NotFound',
+      }
+    }
+    return articles[0]
+  },
 }
 export default Query
