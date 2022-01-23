@@ -14,11 +14,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { user } from './config'
 
 const clientRequest = async (operation: any) => {
-  console.log('Client request: ', {
-    operationName: operation.operationName,
-    variables: operation.variables,
-    query: operation.query,
-  })
   operation.setContext({
     headers: {
       Accept: 'application/json',
@@ -30,6 +25,7 @@ const clientRequest = async (operation: any) => {
 
 const serverUri = process.env.SERVER_URI || 'http://localhost:9000'
 const client = new ApolloClient({ uri: serverUri, request: clientRequest })
+user.gqlClient = client
 
 function App() {
   return (

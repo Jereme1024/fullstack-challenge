@@ -10,6 +10,7 @@
     "start": "parcel -p 8000 watch src/index.html --open"
   },
   "dependencies": {
+    "@metamask/onboarding": "^1.0.1",
     "@reduxjs/toolkit": "^1.7.1",
     "antd": "^4.18.4",
     "apollo-boost": "^0.4.9",
