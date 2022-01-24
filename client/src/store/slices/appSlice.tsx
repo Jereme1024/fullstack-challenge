@@ -35,6 +35,7 @@ export const slice = createSlice({
       state.token = ''
       state.userName = user.anonymous
       user.token = ''
+      user.gqlClient.resetStore()
     },
   },
 })

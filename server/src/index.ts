@@ -10,39 +10,13 @@ import { ApolloServer, gql } from 'apollo-server'
 import Query from './resolvers/Query'
 import Mutation from './resolvers/Mutation'
 import { connectOrbitDb, disconnectOrbitDb } from './utils/orbitDb'
-
-const isAnonymous = (name: string) => {
-  return name?.indexOf('Anonymous') === 0
-}
-
-const getUserFromToken = (token: string) => {
-  if (process.env.NODE_ENV === 'dev') {
-    const prefix = 'Bearer '
-    const isPrefix = token.indexOf(prefix) === 0
-    const jwt = isPrefix ? token.slice(prefix.length) : ''
-    // console.log({ user: jwt, token })
-    return jwt
-  }
-  return 'FIXME: skip auth'
-}
+import getUserFromRequest from './utils/getUserFromRequest'
 
 // init server
 const server = new ApolloServer({
   cors: { origin: '*' },
   dataSources: () => ({}),
-  context: ({ req }: any) => {
-    let user = 'Anonymous -1'
-    const token = req.headers.authorization || ''
-    const anonymous = req.headers.anonymous || ''
-    // if: token
-    const userFromToken = getUserFromToken(token)
-    if (userFromToken) {
-      user = userFromToken
-    } else if (isAnonymous(anonymous)) {
-      user = anonymous
-    }
-    return { user, req }
-  },
+  context: getUserFromRequest,
   debug: true,
   resolvers: {
     Query,

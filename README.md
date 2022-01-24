@@ -1,8 +1,9 @@
 # Full-stack Engineer Challenge
 
 The challenge consists of two parts:
-* [Code Challenge](./CodeChallenge.md)
-* [Written Challenge](./WrittenChallenge.md)
+
+- [Code Challenge](./CodeChallenge.md) 👉👉👉 [Demo and documents](./demo)
+- [Written Challenge](./WrittenChallenge.md)
 
 Please clone this repo and submit your work in a seperate fork.
 
